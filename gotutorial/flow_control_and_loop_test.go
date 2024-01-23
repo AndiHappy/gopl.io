@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-func TestFlowControl(t *testing.T) {
+func TestFlowControl1(t *testing.T) {
 	// first ： if condition
 	var s = "Japan"
 	x := true
@@ -39,7 +39,7 @@ func TestFlowControl(t *testing.T) {
 	}
 }
 
-func TestForLoop(t *testing.T) {
+func TestForLoop2(t *testing.T) {
 	k := 1
 	for ; k <= 10; k++ {
 		fmt.Println(k)
@@ -85,7 +85,7 @@ func TestForLoop(t *testing.T) {
 	}
 }
 
-func TestRangeLoopOverString(t *testing.T) {
+func TestRangeLoopOverString2(t *testing.T) {
 
 	for range "Hello" {
 		fmt.Println("Hello")
