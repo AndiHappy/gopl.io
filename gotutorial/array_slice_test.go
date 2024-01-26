@@ -396,3 +396,84 @@ func TestSlice(t *testing.T) {
 	fmt.Println(countries[0:])
 	fmt.Println(countries[0:len(countries)])
 }
+
+func TestDeleteIndexCopy(t *testing.T) {
+	var countries = []string{"india", "japan", "canada", "australia", "russia"}
+	v := DeleteIndexCopy(countries, 2)
+	vv := v.([]string)
+	fmt.Println(vv)
+}
+
+func DeleteIndexCopy(s interface{}, index int) interface{} {
+	arr := reflect.ValueOf(s)
+	if arr.Kind() != reflect.Array && arr.Kind() != reflect.Slice {
+		panic("Invalid data-type")
+	}
+
+	ret := make([]interface{}, arr.Len()-1)
+	for i, k := 0, 0; i < arr.Len(); i++ {
+		if i != index {
+			ret[k] = arr.Index(i).Interface()
+			k++
+		}
+	}
+	return ret
+}
+
+func TestDeleteIndexCopy2(t *testing.T) {
+	var countries = []string{"india", "japan", "canada", "australia", "russia"}
+	v := DeleteIndexCopy2(countries, 2)
+	vv := v.([]string)
+	fmt.Println(vv)
+}
+
+func DeleteIndexCopy2(s interface{}, index int) interface{} {
+	arr := reflect.ValueOf(s)
+	if arr.Kind() != reflect.Array && arr.Kind() != reflect.Slice {
+		panic("Invalid data-type")
+	}
+	if arr.Len() == 0 {
+		return s
+	} else {
+		ret := make([]interface{}, arr.Len()-1)
+		for i, k := 0, 0; i < arr.Len(); i++ {
+			if i != index {
+				ret[k] = arr.Index(i).Interface()
+				k++
+			}
+		}
+		switch arr.Index(0).Kind() {
+		case reflect.Int:
+			return retToIntArray(ret)
+		case reflect.String:
+			return retToStringArray(ret)
+		case reflect.Bool:
+			return retToBoolArray(ret)
+		}
+		return ret
+	}
+}
+
+func retToBoolArray(ret []interface{}) interface{} {
+	r := make([]bool, len(ret))
+	for i := 0; i < len(ret); i++ {
+		r[i] = ret[i].(bool)
+	}
+	return r
+}
+
+func retToStringArray(ret []interface{}) interface{} {
+	r := make([]string, len(ret))
+	for i := 0; i < len(ret); i++ {
+		r[i] = ret[i].(string)
+	}
+	return r
+}
+
+func retToIntArray(ret []interface{}) interface{} {
+	r := make([]int, len(ret))
+	for i := 0; i < len(ret); i++ {
+		r[i] = ret[i].(int)
+	}
+	return r
+}
