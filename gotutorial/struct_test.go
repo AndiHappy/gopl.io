@@ -162,12 +162,12 @@ func TestStructJson(t *testing.T) {
 	fmt.Printf("%s\n", jsonStr)
 }
 
-type Employee struct {
+type EmployeeStruct struct {
 	Name string
 	Age  int
 }
 
-func (obj *Employee) Info() {
+func (obj *EmployeeStruct) Info() {
 	if obj.Name == "" {
 		obj.Name = "John Doe"
 	}
@@ -176,10 +176,10 @@ func (obj *Employee) Info() {
 	}
 }
 func TestAssignDefaultValue(t *testing.T) {
-	emp1 := Employee{Name: "Mr. Fred"}
+	emp1 := EmployeeStruct{Name: "Mr. Fred"}
 	emp1.Info() // 这种默认处理的方式，的确让人有点接受不能
 	fmt.Println(emp1)
-	emp2 := Employee{Age: 26}
+	emp2 := EmployeeStruct{Age: 26}
 	emp2.Info()
 	fmt.Println(emp2)
 }

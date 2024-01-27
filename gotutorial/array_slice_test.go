@@ -132,7 +132,7 @@ func itemExists(arrayType interface{}, item interface{}) bool {
 	return false
 }
 
-func TestInterface(t *testing.T) {
+func TestRemoveIndexInterface(t *testing.T) {
 	strArray := []string{"India", "Canada", "Japan", "Germany", "Italy"}
 	removeArray := RemoveIndexInterface(strArray, 2)
 	fmt.Println(strArray)
