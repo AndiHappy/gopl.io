@@ -186,10 +186,41 @@ func TestMutex(t *testing.T) {
 	fmt.Println("Counter:", counter2)
 }
 
+var (
+	mu    = sync.Mutex{}
+	cond  = sync.NewCond(&mu)
+	cond2 = sync.NewCond(&mu)
+	index int
+	state = true
+)
+
 func TestAlternatelyPrint(t *testing.T) {
-	max := 2000
-	index := 0
-	mutex := sync.Mutex{}
-	go print(index, max, mutex)
+	maxV := 2000
+	go print1(maxV, cond)
+	go print2(maxV, cond)
 	time.Sleep(time.Second * 10000)
+}
+
+func print1(v int, cond *sync.Cond) {
+	for index < v {
+		cond.L.Lock()
+		if state {
+			fmt.Println("p1:", index)
+			index++
+			state = false
+		}
+		cond.L.Unlock()
+	}
+}
+
+func print2(v int, cond *sync.Cond) {
+	for index < v {
+		cond.L.Lock()
+		if !state {
+			fmt.Println("p2:", index)
+			index++
+			state = true
+		}
+		cond.L.Unlock()
+	}
 }
