@@ -1,4 +1,4 @@
-package slice_test
+package gotutorial_test
 
 import (
 	"fmt"
